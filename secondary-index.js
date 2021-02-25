@@ -21,15 +21,9 @@ var params = {
   },
 };
 
-docClient.query(params, function (err, data) {
-  if (err) {
-    console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-  } else {
-    console.log("Query succeeded.");
-    console.log(data);
+const query = async () => {
+  const data = await docClient.query(params).promise();
+  console.log(data);
+};
 
-    data.Items.forEach((user) => {
-      console.log(`${user["UserId"]} score is ${user["TopScore"]}`);
-    });
-  }
-});
+query();
