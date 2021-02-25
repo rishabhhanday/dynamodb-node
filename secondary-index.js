@@ -23,7 +23,21 @@ var params = {
 
 const query = async () => {
   const data = await docClient.query(params).promise();
-  console.log(data);
+
+  console.log(data.Count);
+
+  data.Items.forEach(async (item) => {
+    var delParams = {
+      TableName: "GameScores",
+      Key: {
+        UserId: item["UserId"],
+        GameTitle: item["GameTitle"],
+      },
+    };
+
+    console.log(`deleting doc by hk - ${item.toString()}`);
+    await docClient.delete(delParams).promise();
+  });
 };
 
 query();
